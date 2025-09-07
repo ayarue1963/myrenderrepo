@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+<style>
+hr {
+  border-color: green;
+  border-width:3px;
+  border-style: solid;
+}
+table {
+  border-collapse: collapse; /* Collapses borders for a clean grid */
+}
+
+th {
+  border: 3px solid #000; /* #999 Sets a 1px solid gray border for cells */
+  padding: 8px; /* Adds spacing within cells */
+  text-align: left;
+}
+tr {
+     border-bottom: 3px solid black; /* Only bottom border on rows */
+   }
+td {
+  border: 3px solid #000; /* #999 Sets a 1px solid gray border for cells */
+  padding: 8px; /* Adds spacing within cells */
+  text-align: left;
+}
+</style>
+<script>
+  document.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+  });
+function printContentAfterHR() {
+  const hrElement = document.querySelector('hr');
+  if (hrElement) {
+    const contentToPrint = hrElement.nextElementSibling; // Get the element immediately after the HR
+
+    if (contentToPrint) {
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write('<html><head><title>Print</title></head><body>');
+      printWindow.document.write(contentToPrint.outerHTML); // Include the element itself
+      // You might need to include relevant CSS here for proper styling in the new window
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+      // Optional: Close the new window after printing
+      // printWindow.close(); 
+    }
+  }
+}
+
+function checkPasswordAndPrint() {
+        var password = document.getElementById("passwordInput").value;
+        var correctPassword = "govadmin"; // Replace with your actual password
+
+        if (password === correctPassword) {
+            printContentAfterHR(); // Trigger the print dialog
+        } else {
+            alert("Incorrect password. Please try again."); // Inform the user of incorrect password
+        }
+    } 
+
+</script>
+
+</head>
+<body>
+   <p><input type="password" id="passwordInput" placeholder="Enter password"> &nbsp;&nbsp;
+    <button onclick="checkPasswordAndPrint()">Print </button>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='/admin/login'> LOGIN </a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="{% url 'home' %}">Home</a>
+   </p>
+   <hr>
+    <div class="container mt-5">
+        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img width=100px height=100px src="{% static 'images/logo.png' %}" align="center">FEDERAL REPUBLIC OF NIGERIA </h1>
+        <h2> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <class="mb-4" style="text-align: center;">EBONYI STATE GOVERNMENT: LGA PROJECT UPDATE</h2>
+
+        <table class="table table-bordered" table border="3" align="center" style="width: 80%; height:80%">
+            <thead>
+                <tr>
+                    <th>TITLE</th>
+                    <th>POST CONTENT</th>
+                    <th>POST SCORE</th>
+                    <th>DATE CREATED</th>
+                </tr>
+            </thead>
+      <tbody>
+    {% for post in posts %}
+    <tr>
+        <td>{{ post.title }}</td>
+       <td> <p>{{ post.content|linebreaks }}</p>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" width="300">
+        {% endif %}
+        {% if post.pdf %}
+            <a href="{{ post.pdf.url }}">View PDF</a>
+        {% endif %} </td>
+        <td>Score: {{ post.score }}</td>
+        <td>{{ post.created_at }}</td>
+
+       </tr>
+     {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

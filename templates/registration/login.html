@@ -1,0 +1,7 @@
+<title> EBONYI STATE LGA ADMIN PANEL </title>
+<h2>Login</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>

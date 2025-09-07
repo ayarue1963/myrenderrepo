@@ -1,0 +1,50 @@
+/* Uniform styling for inputs, selects, textareas, and buttons */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select,
+button {
+  width: 100%;              /* Take full width of parent container */
+  max-width: 400px;         /* Prevents them from being too wide on large screens */
+  min-width: 200px;         /* Ensures usability on small screens */
+  height: 44px;             /* Uniform height */
+  padding: 10px 14px;
+  font-size: 16px;          /* Consistent font size */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;   /* Includes padding in width calculation */
+  margin: 8px 0;            /* Space between elements */
+  display: block;           /* Stack elements vertically */
+}
+
+/* Button-specific styling */
+button,
+input[type="submit"],
+input[type="button"] {
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.1s ease;
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: #0056b3;
+  transform: scale(1.02);   /* Subtle hover effect */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  input,
+  textarea,
+  select,
+  button {
+    max-width: 100%;   /* Full width on small screens */
+    font-size: 14px;   /* Slightly smaller text for mobiles */
+  }
+}

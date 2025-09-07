@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<style>
+table {
+  border-collapse: collapse; /* Collapses borders for a clean grid */
+}
+
+th {
+  border: 3px solid #000; /* #999 Sets a 1px solid gray border for cells */
+  padding: 8px; /* Adds spacing within cells */
+  text-align: left;
+}
+tr {
+     border-bottom: 3px solid black; /* Only bottom border on rows */
+   }
+td {
+  border: 3px solid #000; /* #999 Sets a 1px solid gray border for cells */
+  padding: 8px; /* Adds spacing within cells */
+  text-align: left;
+}
+</style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-3" style="text-align: center;">FEDERAL REPUBLIC OF NIGERIA</h1>
+        <h2 class="mb-4" style="text-align: center;">EBONYI STATE GOVERNMENT: LGA UPDATE</h2>
+        <table class="table table-bordered" table border="3">
+            <thead>
+                <tr>
+                    <th>TITLE</th>
+                    <th>POST CONTENT</th>
+                    <th>POST SCORE</th>
+                    <th>DATE CREATED</th>
+                </tr>
+            </thead>
+      <tbody>
+    {% for post in posts %}
+    <tr>
+        <td>{{ post.title }}</td>
+       <td> <p>{{ post.content|linebreaks }}</p>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" width="300">
+        {% endif %}
+        {% if post.pdf %}
+            <a href="{{ post.pdf.url }}">View PDF</a>
+        {% endif %} </td>
+        <td>Score: {{ post.score }}</td>
+        <td>{{ post.created_at }}</td>
+
+       </tr>
+     {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
