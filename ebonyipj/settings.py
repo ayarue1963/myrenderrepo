@@ -86,6 +86,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
 DATABASES["default"]=dj_database_url.parse(config("DATABASE_URL"))
 
 MEDIA_URL = '/media/'
@@ -129,18 +130,33 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
-STATICFILES_DIR=[
+STATIC_URL = "/static/"
+STATICFILES_DIRS=[
     os.path.join(BASE_DIR,"static"),
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Working
+#STORAGES = {
+#    "staticfiles": {
+#        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#    },
+#}
+
+# Storage backends
 STORAGES = {
+    # Default file storage (local)
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    # Static files storage (with WhiteNoise for production)
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
+#
+# end now
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
